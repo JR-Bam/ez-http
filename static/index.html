@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Example Webpage</h1>
+    <button id="press">Press Mee</button>
+    <div id="content"></div>
+
+    <script>
+        const button = document.getElementById("press");
+        const contentDiv = document.getElementById("content");
+
+        button.addEventListener("click", onButtonClick);
+
+        function onButtonClick() {
+            console.log("Clicked");
+            fetch('http://localhost:8080/hello', {
+                method: 'GET'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.text();
+            })
+            .then(data => {
+                contentDiv.innerHTML = data;
+            })
+            .catch(error => {
+                contentDiv.innerHTML = "Data not found or fetch failed.";
+            });
+        }
+    </script>
+</body>
+</html>
